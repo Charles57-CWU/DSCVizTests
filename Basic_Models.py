@@ -57,7 +57,7 @@ class BasicModels:
         validation_split.drop([self.class_column_name], axis=1, inplace=True)
 
         # data
-        features = training_split.columns.values.tolist()
+        attributes = training_split.columns.values.tolist()
         print(attributes)
         self.x_train = training_split[attributes]
         self.x_val = validation_split[attributes]
