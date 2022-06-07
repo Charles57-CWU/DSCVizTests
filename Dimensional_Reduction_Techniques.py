@@ -78,7 +78,10 @@ class DimensionalReduction:
         output[self.class_column_name] = self.labels
 
         return output
+    
+    # =====================================================
 
+    # add components to dataset passed to class
     def add_components_to_dataset(self, component_df):
         component_df.drop([self.class_column_name], axis=1, inplace=True)
         comp_names = component_df.columns.values.tolist()
@@ -90,7 +93,10 @@ class DimensionalReduction:
         self.data['class'] = self.labels
 
         return self.data
-
+    
+    # =====================================================
+    
+    # make scatterplot
     def scatterplot_of_components(self, component_df, x, y):
         """
         custom palette for a lot of classes
