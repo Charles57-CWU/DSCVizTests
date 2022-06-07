@@ -53,11 +53,11 @@ class BasicModels:
         self.y_train = training_split[self.class_column_name]
         self.y_val = validation_split[self.class_column_name]
 
-        training_split = training_split.drop([self.class_column_name], axis=1)
-        validation_split = validation_split.drop([self.class_column_name], axis=1)
+        training_split.drop([self.class_column_name], axis=1, inplace=True)
+        validation_split.drop([self.class_column_name], axis=1, inplace=True)
 
         # data
-        features = list(training_split.columns[:])
+        features = training_split.columns.values.tolist()
         print(features)
         self.x_train = training_split[features]
         self.x_val = validation_split[features]
