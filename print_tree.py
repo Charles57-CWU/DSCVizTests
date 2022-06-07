@@ -1,34 +1,67 @@
+"""
+This script will make a print out of a full decision tree
+Add column headers and fix missing values before running models
+Make sure there is only one class column, and the remaining columns are attributes you'd like to run in the model
+"""
+
 import os
+
 os.environ["PATH"] += os.pathsep + 'C:\Program Files (x86)\Graphviz2.38/bin/'
+
+# imports
 from sklearn import tree
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import graphviz
-import numpy as np
 
-df = pd.read_csv('Maverick_Tests/LUPI_BCI_ALL.csv')
-#scaler = MinMaxScaler((0, 1))
-#df[:] = scaler.fit_transform(df[:])
 
-df_mod = df.copy()
-targets = df_mod['class'].unique()
-lenn = len(df_mod.columns)
-map_to_int = {name: n for n, name in enumerate(targets)}
-df_mod['target'] = df_mod['class'].replace(map_to_int)
-df_mod = df_mod.drop(['class'], axis=1)
-features = list(df_mod.columns[:lenn-1])
+class PrintDT:
+    def __init__(self, dataset_name, class_column_name):
+        self.dataset_name = dataset_name
+        self.class_column_name = class_column_name
 
-print(df_mod)
-print(targets)
+        self.labels = None
+        self.data = None
 
-print(features)
-Y = df_mod['target']
-X = df_mod[features]
-print(np.shape(X))
+    # csv to data and labels
+    def get_data_and_labels(self):
+        data = pd.read_csv(self.dataset_name)
 
-clf = tree.DecisionTreeClassifier(random_state=0)
-clf = clf.fit(X, Y)
+        # change class names to numerical and use as labels
+        targets = data[self.class_column_name].unique()
+        map_to_int = {name: n for n, name in enumerate(targets)}
+        self.labels = data[self.class_column_name].replace(map_to_int)
 
-dot_data = tree.export_graphviz(clf, out_file=None)
-graph = graphviz.Source(dot_data)
-graph.render()
+        data.drop([self.class_column_name], axis=1, inplace=True)
+
+        # optional scale the data
+        # scaler = MinMaxScaler((0, 1))
+        # data[:] = scaler.fit_transform(data[:])
+
+        # get data
+        self.data = data
+
+    # build the tree
+    def build_tree(self, output_filename):
+        # uses CART DT algorithm
+        clf = tree.DecisionTreeClassifier()
+        clf.fit(self.data, self.labels)
+
+        dot_data = tree.export_graphviz(clf, out_file=None)
+        graph = graphviz.Source(dot_data)
+        graph.render(output_filename)
+
+
+if __name__ == '__main__':
+    dataset_name = 'iris_dataset.csv'
+    class_column_name = 'class'
+
+    output_filename = 'CWUTREE2'
+
+    a = PrintDT(dataset_name, class_column_name)
+    a.get_data_and_labels()
+    a.build_tree(output_filename)
+
+    """
+    tree saves to file called output_filename.pdf
+    """
