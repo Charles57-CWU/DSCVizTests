@@ -48,12 +48,12 @@ class CrossValidateModels:
         # labels
         self.y = data[self.class_column_name]
 
-        data = data.drop([self.class_column_name], axis=1)
+        data.drop([self.class_column_name], axis=1, inplace=True)
 
         # data
-        features = list(data.columns[:])
-        print(features)
-        self.x = data[features]
+        attributes = data.columns.values.tolist()
+        print(attributes)
+        self.x = data[attributes]
 
     # =====================================================
 
