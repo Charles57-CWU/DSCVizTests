@@ -1,9 +1,6 @@
 """
 This script will run a manually selected training-validation split against various classfication models from the scikit-learn library
-
-
 Add column headers, fix missing values, and make sure class labels are in numeric form, before running models
-
 Make sure there is only one class column, and the remaining columns are attributes you'd like to run in the model
 """
 
