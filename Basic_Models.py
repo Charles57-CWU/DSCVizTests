@@ -1,3 +1,13 @@
+"""
+This script will run a manually selected training-validation split against various classfication models from the scikit-learn library
+
+
+Add column headers, fix missing values, and make sure class labels are in numeric form, before running models
+
+Make sure there is only one class column, and the remaining columns are attributes you'd like to run in the model
+"""
+
+
 # import models
 from sklearn import tree
 from sklearn import svm
@@ -26,9 +36,10 @@ warnings.warn = warn
 
 # =====================================================
 class BasicModels:
-    def __init__(self, training_name, validation_name):
+    def __init__(self, training_name, validation_name, class_column_name):
         self.training_name = training_name
         self.validation_name = validation_name
+        self.class_column_name = class_column_name
 
         self.x_train = None
         self.y_train = None
@@ -42,11 +53,11 @@ class BasicModels:
         validation_split = pd.read_csv(self.validation_name)
 
         # labels
-        self.y_train = training_split['class']
-        self.y_val = validation_split['class']
+        self.y_train = training_split[self.class_column_name]
+        self.y_val = validation_split[self.class_column_name]
 
-        training_split = training_split.drop(['class'], axis=1)
-        validation_split = validation_split.drop(['class'], axis=1)
+        training_split = training_split.drop([self.class_column_name], axis=1)
+        validation_split = validation_split.drop([self.class_column_name], axis=1)
 
         # data
         features = list(training_split.columns[:])
@@ -108,11 +119,12 @@ if __name__ == '__main__':
     # input filename
     training_name = 'LUPI_WDBC_NOT_SV.csv'
     validation_name = 'LUPI_WDBC_SV.csv'
+    class_column_name = 'class'
 
     # output filename
     output_csv_name = 'CWU_RESULTS.csv'
 
-    m = BasicModels(training_name, validation_name)
+    m = BasicModels(training_name, validation_name, class_column_name)
 
     # run models
     m.get_data_and_labels()
