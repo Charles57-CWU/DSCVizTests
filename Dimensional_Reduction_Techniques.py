@@ -65,7 +65,7 @@ class DimensionalReduction:
             transformed_data = PCA(n_components=num_of_comp).fit_transform(self.data)
 
         elif model == 'MDS':  # multidimensional scaling
-            transformed_data = PCA(n_components=num_of_comp).fit_transform(self.data)
+            transformed_data = MDS(n_components=num_of_comp).fit_transform(self.data)
 
         else:
             transformed_data = None
