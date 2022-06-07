@@ -6,8 +6,8 @@ Make sure there is only one class column, and the remaining columns are attribut
 
 
 # import models
-from sklearn import tree
-from sklearn import svm
+from sklearn.tree import DesicionTreeClassifier
+from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
@@ -73,7 +73,7 @@ class CrossValidateModels:
         models = ['DT', 'SGD', 'NB', 'SVM', 'KNN', 'LR', 'MLP', 'RF']
         for model in models:
             if model == 'DT':
-                clf = tree.DecisionTreeClassifier()
+                clf = DecisionTreeClassifier()
             elif model == 'SGD':
                 clf = SGDClassifier()
             elif model == 'RF':
@@ -81,7 +81,7 @@ class CrossValidateModels:
             elif model == 'NB':
                 clf = GaussianNB()
             elif model == 'SVM':
-                clf = svm.SVC()
+                clf = SVC()
             elif model == 'KNN':
                 clf = KNeighborsClassifier()
             elif model == 'LR':
