@@ -6,7 +6,7 @@ Make sure there is only one class column, and the remaining columns are attribut
 
 
 # import models
-from sklearn.tree import DesicionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
