@@ -58,9 +58,9 @@ class BasicModels:
 
         # data
         features = training_split.columns.values.tolist()
-        print(features)
-        self.x_train = training_split[features]
-        self.x_val = validation_split[features]
+        print(attributes)
+        self.x_train = training_split[attributes]
+        self.x_val = validation_split[attributes]
 
     # =====================================================
 
